@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>北科安心租 | 次世代租屋平台 DEMO</title>
-  <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -267,7 +267,7 @@
           <button onclick="zoomMap(1.2)">+</button>
           <button onclick="zoomMap(0.8)">-</button>
         </div>
-        <div id="draggable-map" style="background-image: url('./Untitled%20design.png');">
+        <div id="draggable-map" style="background-image: url('Untitled%20design.png');">
           <div id="map-markers-layer"></div>
         </div>
       </div>
@@ -620,7 +620,22 @@
     </div>
   </div>
 
-  <script src="./data/mockData.js"></script>
-  <script src="./script.js"></script>
+  <!-- GitHub Pages 版本：同層檔案直接用相對路徑，不要用 / 開頭 -->
+  <script src="data/mockData.js"></script>
+  <script>
+    // 如果你沒有 data/mockData.js，而是把 mockData.js 放在根目錄或 DEMO 資料夾，會自動嘗試載入。
+    if (!window.mockData) document.write('<script src="mockData.js"><\/script>');
+  </script>
+  <script>
+    if (!window.mockData) document.write('<script src="DEMO/data/mockData.js"><\/script>');
+  </script>
+  <script>
+    if (!window.mockData) document.write('<script src="DEMO/mockData.js"><\/script>');
+  </script>
+  <script>
+    // 避免資料檔缺失時整頁白畫面；正式版還是建議補上 mockData.js。
+    if (!window.mockData) window.mockData = { properties: [] };
+  </script>
+  <script src="script.js"></script>
 </body>
 </html>
