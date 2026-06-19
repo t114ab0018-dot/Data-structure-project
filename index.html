@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>北科安心租 | 次世代租屋平台 DEMO</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="nav-brand" onclick="navigateTo(0)">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+      北科安心租
+    </div>
+    <div class="nav-links">
+      <a href="#" id="nav-home-link" onclick="navigateTo(0)">首頁</a>
+      <a href="#" id="nav-student-link" onclick="goStudentEntry()">學生入口</a>
+      <a href="#" id="nav-landlord-link" onclick="goLandlordEntry()">房東中心</a>
+      <button class="nav-profile-icon" id="nav-profile-icon" onclick="goProfileEntry()" title="個人資料" aria-label="個人資料">
+        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21a8 8 0 0 0-16 0"></path><circle cx="12" cy="8" r="4"></circle></svg>
+      </button>
+    </div>
+  </nav>
+
+  <div id="page-0" class="page active">
+    <div class="hero">
+      <div class="hero-bg-left"></div>
+      <div class="hero-bg-right"></div>
+      <div class="fade-in">
+        <h1 style="font-size:3.5rem; margin-bottom:1rem; white-space:nowrap;">尋找你的下一個理想棲居</h1>
+        <h2 style="font-size:1.8rem; margin-bottom:1.5rem; color:var(--morandi-charcoal);">連結每一份居住需求，成就每一個家的故事。</h2>
+        <p>整合北科大學生驗證、房東產權審核、地圖找房與室友配對，打造完整且可信賴的租屋流程平台。</p>
+        <div class="flex gap-4 mt-8">
+          <button class="btn btn-primary" onclick="goStudentEntry()">開始找房</button>
+          <button class="btn btn-outline" onclick="goLandlordEntry()">我是房東</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="container py-8 mt-8">
+      <h2 class="text-center mb-8 slide-up">為什麼選擇我們</h2>
+      <div class="grid grid-cols-3 gap-6 mb-8 slide-up delay-100">
+        <div class="glass-card text-center">
+          <div class="mb-4" style="color:var(--morandi-sage); display:flex; justify-content:center;">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><polyline points="9 12 11 14 15 10"></polyline></svg>
+          </div>
+          <h3>實名認證機制</h3>
+          <p>房東與租客雙向認證，藍勾勾標章保證真實身分，打造透明安全的租屋環境。</p>
+        </div>
+        <div class="glass-card text-center">
+          <div class="mb-4" style="color:var(--morandi-sage); display:flex; justify-content:center;">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path><path d="M8 12h.01"></path><path d="M16 12h.01"></path></svg>
+          </div>
+          <h3>AI 智能媒合</h3>
+          <p>根據通勤需求、生活習慣、預算範圍，AI 自動計算契合度，優先推薦最適合的房源。</p>
+        </div>
+        <div class="glass-card text-center">
+          <div class="mb-4" style="color:var(--morandi-sage); display:flex; justify-content:center;">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+          </div>
+          <h3>租補整合服務</h3>
+          <p>一鍵篩選租補合格物件，自動計算補助金額，讓你省錢又省心。</p>
+        </div>
+      </div>
+
+      <h2 class="mb-4 mt-8 slide-up delay-200">您可能會喜歡的熱門地段房源</h2>
+      <div class="carousel slide-up delay-300" id="home-carousel">
+        </div>
+      
+      <h2 class="text-center mb-8 mt-8 slide-up">房東真實分享</h2>
+      <div class="grid grid-cols-2 gap-6 mb-8 slide-up">
+        <div class="glass-card testimonial-card">
+          <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=600&h=400&fit=crop" class="testimonial-img" alt="房東見證">
+          <div class="p-4">
+            <p><strong>陳先生 · 大安區</strong></p>
+            <p class="testimonial-excerpt">透過北科大同學實名學籍認證與線上電子簽約，管理大安區套房省時又省力，合約全數位化保存...</p>
+            <div class="accordion">
+              <div class="accordion-header" onclick="toggleAccordion(this)">
+                <span>閱讀完整分享文</span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </div>
+              <div class="accordion-content">
+                我的『大安區 靜巷美套房』先前承租給北科大陳信宏同學。最讓我驚豔的是平台的『學生實名學籍認證』，點進陳同學的履歷就能看到系所跟年級，讓人非常放心。我們雙方直接透過平台完成了『電子合約簽署』，免去過去印合約、約時間的麻煩，且合約在平台都有備份。每個月的租金繳納狀態也會在後台的租金催收表上自動對帳更新，對房東來說是前所未有的省時省力體驗！
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="glass-card testimonial-card">
+          <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=600&h=400&fit=crop" class="testimonial-img" alt="房東見證">
+          <div class="p-4">
+            <p><strong>林小姐 · 中山區 & 信義區</strong></p>
+            <p class="testimonial-excerpt">平台的跨區數位化管理太棒了！修繕請求與線上報修對帳追蹤，讓我一站式掌握所有套房狀態...</p>
+            <div class="accordion">
+              <div class="accordion-header" onclick="toggleAccordion(this)">
+                <span>閱讀完整分享文</span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </div>
+              <div class="accordion-content">
+                我同時管理中山區與信義區的多間套房，以往最怕半夜接到房客的維修訊息，或匯款對帳漏掉。現在林依晨同學在中山區反映『冷氣不冷』，我點開平台的『修繕請求』就能一鍵把狀態設定為『處理中』並留下備註，修復後再切換成『已完成』，跟學生端完全連動！先前信義區周杰倫同學的『熱水器故障』報修也處理完畢，租金繳款逾期時還會顯示『逾期提醒中』，一站式對帳與修繕追蹤真的很方便！
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div style="padding: 4rem 2rem; display:flex; justify-content:center;">
+      <div class="bottom-cta-box" style="background:var(--morandi-sage-light); border-radius:var(--border-radius-lg); padding:3rem 2rem; text-align:center; max-width:800px; width:100%;">
+        <h2 style="color:white; font-size:2rem; margin-bottom:1rem;">準備好找到理想的家了嗎？</h2>
+        <p style="color:white; font-size:1.1rem; margin-bottom:2rem;">加入我們，體驗全新的智能租屋服務</p>
+        <button class="btn" style="background:white; color:var(--morandi-sage); font-size:1.1rem; padding: 1rem 2.5rem;" onclick="goStudentEntry()">立即開始</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="page-1" class="page">
+    <div class="container" style="display:flex; justify-content:center; align-items:center; min-height:80vh;">
+      <div class="glass-card w-full fade-in" style="max-width: 400px;">
+        <h2 class="text-center">學生入口 (SSO)</h2>
+        <div class="segmented-control mb-4">
+          <button class="active" onclick="switchAuthPanel('student', 'login')">登入</button>
+          <button onclick="switchAuthPanel('student', 'register')">註冊</button>
+        </div>
+        <div id="student-login-panel">
+          <p class="text-center mb-4">請使用北科大 Portal 帳號登入</p>
+          <div class="input-group">
+            <label>學號 (Student ID)</label>
+            <input type="text" id="student-login-id" placeholder="t1234567" value="t1234567">
+          </div>
+          <div class="input-group">
+            <label>密碼 (Password)</label>
+            <input type="password" id="student-login-password" placeholder="••••••••" value="password">
+          </div>
+          <button class="btn btn-primary w-full mt-4" onclick="loginStudent('login')">登入</button>
+        </div>
+        <div id="student-register-panel" style="display:none;">
+          <p class="text-center mb-4">建立展示用學生帳號，Demo 不會送出真實資料。</p>
+          <div class="input-group">
+            <label>姓名</label>
+            <input type="text" id="student-register-name" placeholder="王小明">
+          </div>
+          <div class="input-group">
+            <label>學號</label>
+            <input type="text" id="student-register-id" placeholder="t1234567">
+          </div>
+          <div class="input-group">
+            <label>設定密碼</label>
+            <input type="password" id="student-register-password" placeholder="••••••••">
+          </div>
+          <button class="btn btn-primary w-full mt-4" onclick="loginStudent('register')">註冊並登入</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="page-2" class="page">
+    <div class="container mt-8 fade-in">
+      <h2 class="text-center">房東實名認證中心</h2>
+      <p class="text-center mb-8">為了保障學生權益，請完成以下步驟以認證房東身分。</p>
+      
+      <div class="glass-card w-full mx-auto" style="max-width: 600px; margin: 0 auto;">
+        <h3 class="mb-4">區塊一：建立新帳號</h3>
+        <div class="grid grid-cols-2 gap-4">
+          <div class="input-group">
+            <label>姓名</label>
+            <input type="text" id="landlord-register-name" placeholder="王大明" value="王大明">
+          </div>
+          <div class="input-group">
+            <label>聯絡電話</label>
+            <input type="text" id="landlord-register-phone" placeholder="0912-345-678" value="0912-345-678">
+          </div>
+        </div>
+        <div class="input-group">
+          <label>電子郵件</label>
+          <input type="email" id="landlord-register-email" placeholder="landlord@example.com" value="landlord@example.com">
+        </div>
+        <div class="input-group">
+          <label>密碼</label>
+          <input type="password" id="landlord-register-password" placeholder="••••••••" value="password">
+        </div>
+        
+        <h3 class="mt-6 mb-4">區塊二 (文件上傳區 Dropzone)</h3>
+        <div class="dropzone mb-4" id="dropzone" onclick="simulateUpload()">
+          <p id="dropzone-text">點擊或拖曳「身分證正反面」及「房屋權狀」至此處上傳</p>
+        </div>
+        
+        <div id="upload-status" class="mb-4" style="display:none; text-align:center;">
+          <div class="badge badge-warning" style="font-size:1rem; padding:0.5rem 1rem;">等待系統審核中...</div>
+          <p class="mt-2" style="font-size:0.9rem;">人工審核約需 1-2 個工作天，Demo 模式點擊提交將自動通關。</p>
+        </div>
+
+        <button class="btn btn-primary w-full mt-4" id="btn-landlord-submit" onclick="simulateLandlordApproval()">提交並前往管理後台</button>
+
+        <div class="section-divider"></div>
+        <h3 class="mb-4">已有帳號？直接登入</h3>
+        <div class="input-group">
+          <label>電子郵件</label>
+          <input type="email" id="landlord-login-email" placeholder="landlord@example.com" value="landlord@example.com">
+        </div>
+        <div class="input-group">
+          <label>密碼</label>
+          <input type="password" id="landlord-login-password" placeholder="••••••••" value="password">
+        </div>
+        <button class="btn btn-outline w-full" onclick="loginLandlord()">登入房東後台</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="page-3" class="page">
+    <div class="split-view fade-in">
+      <div class="split-left-filters">
+        <div class="flex justify-between items-center mb-4">
+          <h2 style="margin:0;">篩選條件</h2>
+          <button class="btn btn-outline" id="back-to-dashboard-btn" style="display:none; padding:0.45rem 0.8rem; font-size:0.85rem;" onclick="navigateTo(6)">我的租屋生活</button>
+        </div>
+        <div class="input-group">
+          <label>地區</label>
+          <select id="filter-district" onchange="filterProperties()">
+            <option value="全部">全部</option>
+            <option value="大安區">大安區</option>
+            <option value="中山區">中山區</option>
+            <option value="信義區">信義區</option>
+            <option value="中正區">中正區</option>
+            <option value="松山區">松山區</option>
+            <option value="大同區">大同區</option>
+            <option value="萬華區">萬華區</option>
+            <option value="文山區">文山區</option>
+            <option value="南港區">南港區</option>
+            <option value="內湖區">內湖區</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <label>房價上限</label>
+          <div class="range-summary">
+            <span>不限下限</span>
+            <span id="price-max-label">$35,000</span>
+          </div>
+          <div class="single-range">
+            <input type="range" id="filter-price-max" min="0" max="35000" step="1000" value="35000" oninput="handlePriceRangeInput()">
+          </div>
+        </div>
+        <div class="input-group">
+          <label>房型選擇</label>
+          <select id="filter-type" onchange="filterProperties(); checkRoommateTrigger(this.value);">
+            <option value="全部">全部</option>
+            <option value="雅房">雅房 (尋找室友)</option>
+            <option value="套房">套房</option>
+            <option value="整層住家">整層住家</option>
+          </select>
+        </div>
+        <div class="input-group" style="flex-direction:row; justify-content:space-between; align-items:center;">
+          <label style="margin:0;">僅顯示可申請租補物件</label>
+          <label class="switch">
+            <input type="checkbox" id="filter-subsidy" onchange="filterProperties()">
+            <span class="slider round"></span>
+          </label>
+        </div>
+        
+        <h3 class="mt-8 mb-4">房源列表 (<span id="property-count">0</span>)</h3>
+        <div id="map-property-list" class="flex-col gap-4">
+          </div>
+      </div>
+
+      <div class="split-right-map" id="map-container-outer">
+        <div class="map-controls">
+          <button onclick="zoomMap(1.2)">+</button>
+          <button onclick="zoomMap(0.8)">-</button>
+        </div>
+        <div id="draggable-map" style="background-image: url('./Untitled%20design.png');">
+          <div id="map-markers-layer"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="page-4" class="page">
+    <div class="container mt-4 mb-4">
+      <button class="btn btn-outline" onclick="navigateTo(3)">← 返回地圖找房</button>
+    </div>
+    <div class="container fade-in">
+      <h2 class="text-center mb-8">室友配對系統</h2>
+      
+      <div class="glass-card w-full mx-auto mb-8" style="max-width: 800px; margin: 0 auto;">
+        <h3>生活習慣問卷表單 (10題)</h3>
+        <p class="mb-4">填寫您的生活作息，我們將為您推薦最適合的室友共同合租套房/整層。</p>
+        
+        <div class="grid grid-cols-2 gap-4">
+          <div class="input-group">
+            <label>1. 通常就寢時間</label>
+            <select id="rm-q1" onchange="resetRoommates()"><option value="0">23:00 前</option><option value="1">23:00 - 01:00</option><option value="2">01:00 後</option></select>
+          </div>
+          <div class="input-group">
+            <label>2. 鬧鐘敏感度</label>
+            <select id="rm-q2" onchange="resetRoommates()"><option value="0">響一次就醒</option><option value="1">需要響多次</option><option value="2">叫不醒</option></select>
+          </div>
+          <div class="input-group">
+            <label>3. 對於寵物的接受度</label>
+            <select id="rm-q3" onchange="resetRoommates()"><option value="0">非常喜歡</option><option value="1">可接受但不幫忙照顧</option><option value="2">無法接受</option></select>
+          </div>
+          <div class="input-group">
+            <label>4. 對整潔的要求</label>
+            <select id="rm-q4" onchange="resetRoommates()"><option value="0">極度潔癖</option><option value="1">一週打掃一次</option><option value="2">隨性</option></select>
+          </div>
+          <div class="input-group">
+            <label>5. 洗澡習慣時間</label>
+            <select id="rm-q5" onchange="resetRoommates()"><option value="0">早上洗</option><option value="1">下班/放學後就洗</option><option value="2">睡前洗</option></select>
+          </div>
+          <div class="input-group">
+            <label>6. 對於冷氣使用的偏好</label>
+            <select id="rm-q6" onchange="resetRoommates()"><option value="0">幾乎不開</option><option value="1">晚上睡覺開</option><option value="2">人在就開</option></select>
+          </div>
+          <div class="input-group">
+            <label>7. 交友與訪客</label>
+            <select id="rm-q7" onchange="resetRoommates()"><option value="0">絕對不帶人回家</option><option value="1">偶爾帶朋友，會先告知</option><option value="2">常常帶朋友來玩</option></select>
+          </div>
+          <div class="input-group">
+            <label>8. 飲食與開伙</label>
+            <select id="rm-q8" onchange="resetRoommates()"><option value="0">全外食</option><option value="1">偶爾簡單煮</option><option value="2">天天煮，喜歡分享</option></select>
+          </div>
+          <div class="input-group">
+            <label>9. 假日作息</label>
+            <select id="rm-q9" onchange="resetRoommates()"><option value="0">都在家休息</option><option value="1">一半一半</option><option value="2">都在外面跑</option></select>
+          </div>
+          <div class="input-group">
+            <label>10. 租金分攤模式</label>
+            <select id="rm-q10" onchange="resetRoommates()"><option value="0">嚴格AA制</option><option value="1">輪流付公費</option><option value="2">隨意</option></select>
+          </div>
+        </div>
+        
+        <button class="btn btn-primary w-full mt-4" onclick="renderRoommates()">送出並計算契合度 (動態篩選最佳 3 名)</button>
+      </div>
+
+      <div id="roommate-results-section" style="display:none; padding-bottom:100px;">
+        <h3 class="text-center mb-6">為您找到最契合的 3 位潛在室友</h3>
+        <div id="roommate-results" class="grid grid-cols-3 gap-6">
+          </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="page-5" class="page">
+    <div class="container mt-8 fade-in mb-8" style="padding-bottom: 120px;">
+      <h2 class="text-center mb-6">合約簽署頁面</h2>
+      <div class="glass-card" style="max-width: 800px; margin: 0 auto; padding: 2rem;">
+        <h3 class="mb-4">房屋租賃契約書 (電子版)</h3>
+        
+        <div class="scrollable-text-box" style="height: 400px; overflow-y: auto; background: #FAFAF8; padding: 1.5rem; border: 1px solid rgba(0,0,0,0.1); border-radius: var(--border-radius-sm); line-height: 1.8;">
+          <p class="text-center" style="font-size: 1.2rem; font-weight: bold; margin-bottom: 1rem; color: var(--morandi-charcoal);">中華民國住宅租賃契約書 (正式範本)</p>
+          <p><strong>立契約書人：</strong> 出租人 平台認證房東 (以下簡稱甲方)、承租人 北科大學生 (以下簡稱乙方)。</p>
+          <p>茲為住宅租賃事宜，雙方同意訂立本契約，約定條款如下以資共同遵守：</p>
+          <br>
+          <h4>第一條：租賃標的物及範圍</h4>
+          <p>1. 標的地址：台北市大安區精華段之認證物件 (以系統登錄之房源資訊為準)。<br>
+          2. 租賃範圍：住宅全部/獨立套房，包括附屬設備。甲方應擔保本住宅具備適租狀態，無結構性安全危害。</p>
+          <br>
+          <h4>第二條：租賃期間</h4>
+          <p>自民國 115 年 06 月 15 日起至民國 116 年 06 月 14 日止。租期屆滿時，租賃關係即行消滅，乙方應即期返還房屋，不得主張不定期限繼續租用。</p>
+          <br>
+          <h4>第三條：租金約定及支付</h4>
+          <p>1. 租金：本住宅每月租金依本平台登錄金額繳付之，租金為按月支付，乙方應於每月五日前支付之。<br>
+          2. 支付方式：由乙方透過本平台所提供之轉帳通道或線上轉帳至甲方指定帳戶。<br>
+          3. 稅費負擔：本契約若因乙方依法申請租金補貼，而使甲方適用「公益出租人」稅賦優惠，其綜合所得稅、房屋稅及地價稅之減免利益歸甲方所有。雙方同意不得因申請補助而增減租金。</p>
+          <br>
+          <h4>第四條：押金約定及返還</h4>
+          <p>1. 押金數額：雙方約定押金為二個月租金之總額 (依法不得超過二個月)。乙方應於本契約簽署之同時一次付清之。<br>
+          2. 押金返還：租賃期滿或契約終止時，乙方返還房屋並結清相關費用（包括但不限於水電費、損壞賠償金），甲方應於點交完成後返還押金或扣除結清款後之餘額。</p>
+          <br>
+          <h4>第五條：使用租賃住宅之限制</h4>
+          <p>1. 用途：本住宅限乙方作住宅居住使用，乙方不得將本住宅之全部或一部轉租、借用或以其他方式供第三人使用。<br>
+          2. 規範：乙方應遵守公寓大廈管理規約，不得於住宅內從事違法行為、存放易燃或危險物品，亦不得影響周鄰安寧。</p>
+          <br>
+          <h4>第六條：修繕及改裝</h4>
+          <p>1. 修繕責任：住宅或附屬設備因自然損耗或不可歸責於乙方之事由損壞時，由甲方負責修繕。乙方發現損壞時，應即時通知甲方，因乙方怠於通知致損害擴大者，乙方應負賠償責任。<br>
+          2. 改裝限制：乙方非經甲方同意，不得任意改裝本住宅. 若經甲方書面同意改裝，乙方於退租時應負回復原狀之義務。</p>
+          <br>
+          <h4>第七條：承租人之責任與義務</h4>
+          <p>乙方應以善良管理人之注意義務保管並使用本住宅。因乙方之故意或過失致住宅毀損者，乙方應負損害賠償或修繕責任。</p>
+          <br>
+          <h4>第八條：任意終止租約之約定</h4>
+          <p>1. 提前終止：本契約非經雙方書面同意，不得任意提前終止。<br>
+          2. 違約處罰：若雙方約定得提前終止，欲提前終止之一方應於一個月前通知他方。未為先期通知而逕行終止者，應賠償他方最高不得超過一個月租金之違約金。</p>
+          <br>
+          <h4>第九條：住宅之返還與點交</h4>
+          <p>租約期滿或契約終止時，乙方應將住宅回復原狀並將個人物品遷出，與甲方共同進行點交。乙方留置之物品視同廢棄物，甲方得逕行處理，處理費用由乙方負擔，並自押金中扣除。</p>
+          <br>
+          <h4>第十條：契約之效力與爭議解決</h4>
+          <p>1. 本契約為電子合約，具有與實體紙本合約同等之法律效力。<br>
+          2. 因本契約涉訟時，雙方同意以台灣台北地方法院為第一審管轄法院。</p>
+          <br><br>
+          <p class="text-center" style="color:#888;">--- 條文結束 ---</p>
+        </div>
+        
+        <div style="background:rgba(156, 175, 136, 0.1); padding:1rem; border-radius:8px; margin-top:1.5rem;">
+          <p style="margin:0; font-size:0.9rem; color:var(--morandi-sage);"><em>* 此為電子合約閱讀器展示。系統已為您記錄閱讀軌跡以保障雙方權益。</em></p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="sticky-bottom-bar slide-up">
+      <div class="flex items-center gap-2">
+        <input type="checkbox" id="contract-agree" style="width:24px; height:24px;">
+        <label for="contract-agree" style="font-size:1.1rem; font-weight:500;">我已詳細閱讀並同意上述租賃契約條款</label>
+      </div>
+      <button class="btn btn-primary" style="font-size:1.1rem; padding: 1rem 2.5rem;" onclick="signContract()">確認並簽約</button>
+    </div>
+  </div>
+
+  <div id="page-6" class="page">
+    <div class="container mt-8 fade-in" style="padding-bottom:100px;">
+      <div class="flex justify-between items-center mb-8">
+        <div>
+          <h2>我的租屋生活</h2>
+          <p style="color:#666;">輕鬆管理您的租金、報修與合約</p>
+        </div>
+        <div class="flex gap-2">
+          <button class="btn btn-outline" onclick="navigateTo(3)">繼續看房 / 找室友</button>
+          <button class="btn btn-outline" onclick="goProfileEntry()">個人資料</button>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-3 gap-6 mb-8">
+        <div class="glass-card p-4 flex items-center gap-4 interactive-card" onclick="switchStudentTab('rent')" title="查看租金紀錄">
+          <div style="background:rgba(156, 175, 136, 0.2); padding:1rem; border-radius:50%;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--morandi-sage)" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+          </div>
+          <div>
+            <h2 id="student-top-rent-amount" style="margin:0;">已繳清</h2>
+            <p style="margin:0; font-size:0.9rem; color:#666;">本月租金狀態</p>
+          </div>
+        </div>
+        <div class="glass-card p-4 flex items-center gap-4 interactive-card" onclick="switchStudentTab('repairs')" title="查看報修追蹤">
+          <div style="background:rgba(226, 178, 85, 0.2); padding:1rem; border-radius:50%;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#E2B255" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
+          </div>
+          <div>
+            <h2 style="margin:0; color:#E2B255;">處理中</h2>
+            <p style="margin:0; font-size:0.9rem; color:#666;">最新報修進度</p>
+          </div>
+        </div>
+        <div class="glass-card p-4 flex items-center gap-4 interactive-card" onclick="switchStudentTab('contract')" title="查看我的合約">
+          <div style="background:rgba(152, 168, 184, 0.2); padding:1rem; border-radius:50%;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--morandi-slate)" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+          </div>
+          <div>
+            <h2 style="margin:0;">364 天</h2>
+            <p style="margin:0; font-size:0.9rem; color:#666;">租約剩餘時間</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="nav-pills mb-6" id="student-tabs">
+        <button class="active" onclick="switchStudentTab('rent')">租金紀錄</button>
+        <button onclick="switchStudentTab('repairs')">報修追蹤</button>
+        <button onclick="switchStudentTab('contract')">我的合約 (唯讀)</button>
+      </div>
+
+      <div class="glass-card" style="padding:0;">
+        <div id="student-list-container">
+          </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="page-7" class="page">
+    <div class="container mt-8 fade-in" style="padding-bottom:100px;">
+      <div class="flex justify-between items-center mb-8">
+        <div>
+          <h2>房東管理後台</h2>
+          <p style="color:#666;">輕鬆管理您的出租物件與租客資訊</p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-4 gap-4 mb-8">
+        <div class="glass-card p-4 flex items-center gap-4">
+          <div style="background:rgba(156, 175, 136, 0.2); padding:1rem; border-radius:50%;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--morandi-sage)" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <h2 style="margin:0;" id="ll-stat-tenants">5</h2>
+              <span style="color:var(--morandi-sage); font-size:1rem;">↑</span>
+            </div>
+            <p style="margin:0; font-size:0.9rem; color:#666;">租客申請</p>
+          </div>
+        </div>
+        <div class="glass-card p-4 flex items-center gap-4">
+          <div style="background:rgba(152, 168, 184, 0.2); padding:1rem; border-radius:50%;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--morandi-slate)" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+          </div>
+          <div>
+            <h2 style="margin:0;" id="ll-stat-contracts">12</h2>
+            <p style="margin:0; font-size:0.9rem; color:#666;">租約管理</p>
+          </div>
+        </div>
+        <div class="glass-card p-4 flex items-center gap-4">
+          <div style="background:rgba(175, 163, 176, 0.2); padding:1rem; border-radius:50%;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--morandi-mauve)" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+          </div>
+          <div>
+            <h2 style="margin:0;" id="ll-stat-income">$86,000</h2>
+            <p style="margin:0; font-size:0.9rem; color:#666;">本月收入</p>
+          </div>
+        </div>
+        <div class="glass-card p-4 flex items-center gap-4" style="border: 1px solid rgba(226, 178, 85, 0.5);">
+          <div style="background:rgba(226, 178, 85, 0.2); padding:1rem; border-radius:50%;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#E2B255" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <h2 style="margin:0; color:#E2B255;" id="ll-stat-repairs">2</h2>
+              <span style="color:#E2B255; font-size:1.2rem; font-weight:bold;">!</span>
+            </div>
+            <p style="margin:0; font-size:0.9rem; color:#666;">待處理維修</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="nav-pills mb-6" id="landlord-tabs">
+        <button class="active" onclick="switchLandlordTab('properties')">我的物件</button>
+        <button onclick="switchLandlordTab('tenants')">租客履歷</button>
+        <button onclick="switchLandlordTab('contracts')">合約管理</button>
+        <button onclick="switchLandlordTab('payments')">租金催收</button>
+        <button onclick="switchLandlordTab('repairs')">修繕請求</button>
+      </div>
+
+      <div class="glass-card" style="padding:0;">
+        <div id="landlord-list-container">
+          </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="page-8" class="page">
+    <div class="profile-page-shell fade-in">
+      <div class="profile-header-row">
+        <button class="profile-back-btn" onclick="goStudentEntry()" title="返回學生頁">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5"></path><path d="M12 19l-7-7 7-7"></path></svg>
+        </button>
+        <div>
+          <h2>修改個人資訊</h2>
+          <p>更新您的帳號資料、租屋偏好與瀏覽紀錄</p>
+        </div>
+      </div>
+
+      <div class="profile-layout profile-flow-layout">
+        <section class="profile-card">
+          <div class="profile-section-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+            <h3>更新大頭貼</h3>
+          </div>
+          <div class="avatar-editor">
+            <div class="profile-avatar-preview" id="profile-avatar-preview">王</div>
+            <div>
+              <p class="mini-label">選擇顏色</p>
+              <div class="avatar-swatches">
+                <button style="background:linear-gradient(135deg,#9CAF88,#98A8B8)" onclick="selectAvatarColor(0)"></button>
+                <button style="background:linear-gradient(135deg,#AFA3B0,#C4B5C7)" onclick="selectAvatarColor(1)"></button>
+                <button style="background:linear-gradient(135deg,#98A8B8,#9CAF88)" onclick="selectAvatarColor(2)"></button>
+                <button style="background:linear-gradient(135deg,#B8C5AA,#AFA3B0)" onclick="selectAvatarColor(3)"></button>
+              </div>
+            </div>
+            <button class="btn btn-outline" style="margin-left:auto; padding:0.5rem 0.85rem;" onclick="simulateAvatarUpload()">上傳圖片</button>
+          </div>
+        </section>
+
+        <section class="profile-card">
+          <div class="profile-section-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            <h3>基本個人資料</h3>
+          </div>
+          <div class="profile-form-grid">
+            <div class="input-group">
+              <label>姓名</label>
+              <input type="text" id="profile-name" value="王小明" oninput="syncProfileAvatar()">
+            </div>
+            <div class="input-group">
+              <label>聯絡電話</label>
+              <input type="tel" id="profile-phone" value="0912-345-678">
+            </div>
+            <div class="input-group">
+              <label>電子信箱</label>
+              <input type="email" id="profile-email" value="student@ntut.edu.tw">
+            </div>
+            <div class="input-group">
+              <label>系所 / 年級</label>
+              <input type="text" id="profile-dept" value="資工系 3 年級">
+            </div>
+          </div>
+        </section>
+
+        <section class="profile-card">
+          <div class="profile-section-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"></path></svg>
+            <h3>您的收藏</h3>
+          </div>
+          <div id="profile-favorites" class="profile-property-list"></div>
+        </section>
+
+        <section class="profile-card">
+          <div class="profile-section-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            <h3>最近瀏覽</h3>
+          </div>
+          <div id="profile-recent" class="profile-property-list"></div>
+        </section>
+
+        <section class="profile-card profile-wide-card">
+          <div class="profile-section-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
+            <h3>您可能會喜歡</h3>
+          </div>
+          <div id="profile-recommendations" class="profile-recommendation-grid"></div>
+        </section>
+
+        <button type="button" class="profile-save-btn" onclick="saveProfileChanges()">
+          <span id="profile-save-text">儲存變更</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="./data/mockData.js"></script>
+  <script src="./script.js"></script>
+</body>
+</html>
